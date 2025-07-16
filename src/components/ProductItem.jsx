@@ -1,5 +1,5 @@
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import Button from "../ui/button";
+import RegularButton from '../ui/RegularButton';
 
 export default function ProductItem({ mainImage, images, setQuantity, quantity, setCartCount, cartCount, setMainImage }) {
     return (
@@ -66,7 +66,7 @@ export default function ProductItem({ mainImage, images, setQuantity, quantity, 
                         />
                     </div>
 
-                    <Button cartCount={cartCount} quantity={quantity} setCartCount={setCartCount} setQuantity={setQuantity} />
+                    <RegularButton cartCount={cartCount} quantity={quantity} setCartCount={setCartCount} setQuantity={setQuantity} />
                 </div>
             </div>
         </section>

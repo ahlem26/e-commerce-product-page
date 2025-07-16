@@ -1,4 +1,4 @@
-export default function Button({ cartCount, quantity, setCartCount, setQuantity }) {
+export default function RegularButton({ cartCount, quantity, setCartCount, setQuantity }) {
     return (
         <button
             onClick={() => {
