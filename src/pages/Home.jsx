@@ -7,7 +7,22 @@ export default function Home() {
         <div className="max-h-screen">
             {/* Menu */}
             <Navbar cartCount={cartCount}/>
-            home
+            
+            <div>
+
+            </div>
+
+            <div>
+                <h1>Trending Products</h1>
+                <div>
+                    <div>
+                        <img src="" alt="" />
+                        <div>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

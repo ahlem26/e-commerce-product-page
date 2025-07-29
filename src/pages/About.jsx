@@ -3,9 +3,114 @@ import Navbar from "../components/Navbar";
 import { HiArrowLeft } from "react-icons/hi2";
 import { HiArrowRight } from "react-icons/hi2";
 import Footer from "../components/Footer";
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
+// Composant de barre de progression avec étapes, utilisé pour les témoignages
+function StepProgressBar({ steps, currentStep, onBack, onNext }) {
+    // Calcul du pourcentage de progression (entre 0 et 100 %)
+    const progressPercent = ((currentStep - 1) / (steps - 1)) * 100;
+
+    return (
+        // Conteneur principal de la barre
+        <div className="relative w-40 h-3 flex items-center">
+
+            {/* Barre de fond grise */}
+            <div className="flex-1 h-3 bg-gray-300 rounded-full relative">
+
+                {/* Barre de progression colorée (grise foncée ici) */}
+                <div
+                    className="bg-gray-700 h-3 rounded-full transition-all duration-300"
+                    style={{ width: `${progressPercent}%` }} // Largeur dynamique selon le progrès
+                />
+
+                {/* Bouton à gauche représentant l'étape 1 (bouton "retour") */}
+                <button
+                    onClick={onBack} // Fonction à appeler quand on clique
+                    disabled={currentStep === 1} // Désactivé si on est déjà à la première étape
+                    className={`absolute -left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full z-10
+                        flex items-center justify-center font-semibold text-gray-700 bg-white shadow
+                        ${currentStep === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`} // Style conditionnel
+                >
+                    1
+                </button>
+
+                {/* Bouton à droite représentant la dernière étape (bouton "suivant") */}
+                <button
+                    onClick={onNext} // Fonction à appeler quand on clique
+                    disabled={currentStep === steps} // Désactivé si on est à la dernière étape
+                    className={`absolute -right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full z-10
+                        flex items-center justify-center font-semibold text-white shadow
+                        ${currentStep === steps
+                            ? 'bg-gray-500 opacity-50 cursor-not-allowed' // Style désactivé
+                            : 'bg-orange-500 hover:bg-orange-600'}`} // Style actif
+                >
+                    {steps} {/* Affiche le numéro total d'étapes */}
+                </button>
+            </div>
+        </div>
+    );
+}
+
+
+const testimonials = [
+    {
+        id: 1,
+        name: 'Jason M.',
+        role: 'Market Analytics',
+        image: '/images/men ph.jpg',
+        text: '“As a sneaker enthusiast, I appreciate the attention to detail and quality of Sneak Haven\'s collection. Each pair feels like a work of art.”',
+        rating: '10/10 recommend',
+    },
+    {
+        id: 2,
+        name: 'Alice K.',
+        role: 'Product Designer',
+        image: '/images/m1.jpg',
+        text: '“The variety and authenticity here is unmatched. I always find something unique to add to my sneaker collection.”',
+        rating: '9/10 recommend',
+    },
+    {
+        id: 3,
+        name: 'Mark T.',
+        role: 'Fashion Blogger',
+        image: '/images/m2.jpg',
+        text: '“Great service and quality. The community feel is what keeps me coming back.”',
+        rating: '10/10 recommend',
+    },
+    {
+        id: 4,
+        name: 'Sophia L.',
+        role: 'Athlete',
+        image: '/images/m3.jpg',
+        text: '“From performance to style, this brand covers it all. Highly recommended for any sneakerhead.”',
+        rating: '10/10 recommend',
+    },
+    {
+        id: 5,
+        name: 'David W.',
+        role: 'Entrepreneur',
+        image: '/images/m4.jpg',
+        text: '“I love how the culture and passion are embedded in every pair. True sneaker lovers’ paradise.”',
+        rating: '9/10 recommend',
+    },
+];
 
 export default function About() {
     const [cartCount, setCartCount] = useState(0);
+
+
+    const [activeStep, setActiveStep] = useState(1);
+    const steps = testimonials.length;
+
+    const handleNext = () => {
+        if (activeStep < steps) setActiveStep((prev) => prev + 1);
+    };
+
+    const handleBack = () => {
+        if (activeStep > 1) setActiveStep((prev) => prev - 1);
+    };
+
+    const current = testimonials[activeStep - 1];
     return (
         <div className="max-h-screen">
             {/* Menu */}
@@ -87,46 +192,76 @@ export default function About() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 py-16">
-                {/* Sous-titre */}
-                <p className="text-gray-400 text-sm font-semibold uppercase mb-2">
-                    Our Customers Say
-                </p>
+            {/* Section des témoignages */}
+            <section className="mb-20">
+                {/* Conteneur principal centré avec marges internes */}
+                <div className="max-w-7xl mx-auto px-4 py-16">
 
-                {/* Titre principal + flèches */}
-                <div className="flex justify-between items-center mb-10">
-                    <h1 className="text-3xl font-bold text-black">What Our Customers Say</h1>
-                    <div className="flex gap-4">
-                        <button className="w-10 h-10 rounded-full border border-orange-500 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-white transition">
-                            <HiArrowLeft />
-                        </button>
-                        <button className="w-10 h-10 rounded-full border border-orange-500 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-white transition">
-                            <HiArrowRight />
-                        </button>
+                    {/* Titre et boutons de navigation */}
+                    <div className="flex justify-between items-center mb-10">
+                        <div>
+                            {/* Sous-titre en petit */}
+                            <h2 className="text-xl text-gray-500 mb-1 font-semibold">Our Customers Say</h2>
+                            {/* Titre principal */}
+                            <h2 className="text-4xl font-bold text-gray-700">
+                                What Our <br /> Customers Say
+                            </h2>
+                        </div>
+
+                        {/* Boutons de navigation (précédent/suivant) */}
+                        <div className="flex gap-3">
+                            {/* Bouton précédent */}
+                            <button
+                                onClick={handleBack}
+                                disabled={activeStep === 1} // désactivé si c’est le premier témoignage
+                                className={`w-8 h-8 p-2 rounded-full bg-white shadow ${activeStep === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                            >
+                                <FaArrowLeft className="text-gray-600" />
+                            </button>
+
+                            {/* Bouton suivant */}
+                            <button
+                                onClick={handleNext}
+                                disabled={activeStep === steps} // désactivé si c’est le dernier témoignage
+                                className={`w-8 h-8 p-2 rounded-full bg-white shadow ${activeStep === steps ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                            >
+                                <FaArrowRight className="text-gray-600" />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Boîte contenant le témoignage */}
+                    <div className="relative bg-gray-100 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+                        {/* Image du client (colonne de gauche sur desktop) */}
+                        <div className="md:w-1/3 h-72 md:h-auto">
+                            <img
+                                src={current?.image} // image dynamique
+                                alt={current?.name}
+                                className="max-w-[400px] max-h-[300px] object-cover"
+                            />
+                        </div>
+
+                        {/* Contenu du témoignage (texte + nom + rôle) */}
+                        <div className="md:w-2/3 p-6 flex flex-col justify-center space-y-5 relative">
+                            {/* Texte du témoignage */}
+                            <p className="text-gray-600 text-lg">{current?.text}</p>
+                            {/* Note ou évaluation */}
+                            <p className="text-gray-600 text-lg">{current?.rating}</p>
+
+                            {/* Informations sur l’auteur du témoignage + barre de progression */}
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h4 className="font-semibold text-gray-800 text-xl">{current?.name}</h4>
+                                    <p className="text-sm text-gray-500">{current?.role}</p>
+                                </div>
+
+                                {/* Composant de barre de progression personnalisée */}
+                                <StepProgressBar steps={steps} currentStep={activeStep} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                {/* Carte client */}
-                <div className="flex flex-col md:flex-row items-center bg-gray-100 p-6 pl-0 pt-0 pb-0 rounded-lg shadow-md gap-6">
-                    {/* Image du client */}
-                    <img
-                        src="public/images/shoes-6.jpg"
-                        alt="Customer testimonial"
-                        className="w-full max-w-[500px] max-h-[400px] object-cover"
-                    />
-
-                    {/* Témoignage texte */}
-                    <div className="space-y-3 text-center md:text-left">
-                        <p className="text-black leading-relaxed text-2xl">
-                            As a sneaker enthusiast, I appreciate the attention to detail and quality
-                            of Sneak Haven's collection. Each pair feels like a work of art!
-                        </p>
-                        <p className="text-gray-500">10/10 recommend</p>
-                        <p className="text-orange-500 font-bold text-lg">Jason M.</p>
-                        <p className="text-sm text-gray-500">Marker Analytics</p>
-                    </div>
-                </div>
-            </div>
+            </section>
 
             {/* Footer */}
             <Footer />
