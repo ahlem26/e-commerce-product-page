@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { HiArrowLeft } from "react-icons/hi2";
-import { HiArrowRight } from "react-icons/hi2";
 import Footer from "../components/Footer";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 

@@ -1,4 +1,6 @@
-export default function Navbar({cartCount}) {
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+
+export default function Navbar({ cartCount }) {
     return (
         <nav className="bg-white">
             <div className="max-w-6xl mx-auto px-4 pb-5 pt-3 border-b border-gray-200">
@@ -29,7 +31,14 @@ export default function Navbar({cartCount}) {
                             )}
                         </div>
 
-                        <img src="/images/image-avatar.png" alt="Avatar" className="w-9 h-9 rounded-full cursor-pointer" />
+                        <div>
+                            <SignedOut>
+                                <SignInButton />
+                            </SignedOut>
+                            <SignedIn>
+                                <UserButton />
+                            </SignedIn>
+                        </div>
                     </div>
                 </div>
             </div>
