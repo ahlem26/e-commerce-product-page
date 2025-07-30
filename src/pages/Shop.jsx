@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { AiOutlineBars } from "react-icons/ai";
@@ -8,13 +9,38 @@ import { HiOutlineChevronRight } from "react-icons/hi";
 
 export default function Shop() {
     const [cartCount, setCartCount] = useState(0);
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [category, setCategory] = useState("all");
 
-    const products = Array.from({ length: 12 }, (_, i) => ({
-        id: i,
-        name: "Jordan Sneaker",
-        price: "$45.00",
-        image: "public/images/shop-1.jpg",
-    }));
+    useEffect(() => {
+        // Charger uniquement les catégories mens-shoes et womens-shoes
+        const fetchProducts = async () => {
+            try {
+                const [mensRes, womensRes] = await Promise.all([
+                    axios.get("https://dummyjson.com/products/category/mens-shoes"),
+                    axios.get("https://dummyjson.com/products/category/womens-shoes"),
+                ]);
+
+                const combined = [...mensRes.data.products, ...womensRes.data.products];
+                setProducts(combined);
+                setFilteredProducts(combined);
+            } catch (err) {
+                console.error("Erreur lors de la récupération des produits :", err);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const handleCategoryFilter = (cat) => {
+        setCategory(cat);
+        if (cat === "all") {
+            setFilteredProducts(products);
+        } else {
+            setFilteredProducts(products.filter(p => p.category === cat));
+        }
+    };
 
     return (
         <div className="max-h-screen">
@@ -37,112 +63,23 @@ export default function Shop() {
                     <div>
                         <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Product Categories</h2>
                         <ul className="space-y-2 text-gray-600">
-                            <li className="flex justify-between items-center hover:text-orange-500 cursor-pointer">
+                            <li onClick={() => handleCategoryFilter("mens-shoes")} className={`flex justify-between items-center hover:text-orange-500 cursor-pointer ${category === "mens-shoes" && "text-orange-600 font-semibold"}`}>
                                 <span>Men's Shoes</span>
                                 <HiOutlineChevronRight />
                             </li>
-                            <li className="flex justify-between items-center hover:text-orange-500 cursor-pointer">
+                            <li onClick={() => handleCategoryFilter("womens-shoes")} className={`flex justify-between items-center hover:text-orange-500 cursor-pointer ${category === "womens-shoes" && "text-orange-600 font-semibold"}`}>
                                 <span>Women's Shoes</span>
                                 <HiOutlineChevronRight />
                             </li>
-                            <li className="flex justify-between items-center hover:text-orange-500 cursor-pointer">
-                                <span>Kid's Shoes</span>
-                                <HiOutlineChevronRight />
-                            </li>
-                            <li className="flex justify-between items-center hover:text-orange-500 cursor-pointer">
-                                <span>Shop by Sport</span>
+                            <li onClick={() => handleCategoryFilter("all")} className={`flex justify-between items-center hover:text-orange-500 cursor-pointer ${category === "all" && "text-orange-600 font-semibold"}`}>
+                                <span>All</span>
                                 <HiOutlineChevronRight />
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Brands</h2>
-                        <ul className="space-y-1 text-gray-600">
-                            <li>Nike Air Max</li>
-                            <li>Adidas Superstar</li>
-                            <li>Jordan Retro</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Dimensions</h2>
-                        <ul className="space-y-2 text-gray-600">
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>40×60CM (6)</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>60×90CM (8)</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>80×120CM (3)</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Made In</h2>
-                        <ul className="space-y-1 text-gray-600">
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>Germany</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>Japan</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>Taiwan</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>USA</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Sizes</h2>
-                        <ul className="space-y-1 text-gray-600">
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>S</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>M</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>L</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>XL</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-2">Model</h2>
-                        <ul className="space-y-1 text-gray-600">
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>2021 (5)</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>2022 (6)</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>2023 (3)</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <input type="checkbox" className="accent-orange-500 w-4 h-4" />
-                                <span>2024 (8)</span>
-                            </li>
-                        </ul>
-                    </div>
+
+                    {/* Les autres filtres peuvent rester comme ils sont */}
+
                 </aside>
 
                 {/* Main content */}
@@ -158,7 +95,7 @@ export default function Shop() {
                                     <AiOutlineBars className="text-xl" />
                                 </button>
                             </div>
-                            <p className="text-sm text-gray-500">Showing <span className="font-medium text-black">1–12</span> of <span className="font-medium text-black">15</span> item(s)</p>
+                            <p className="text-sm text-gray-500">Showing <span className="font-medium text-black">1–{filteredProducts.length}</span> of <span className="font-medium text-black">{filteredProducts.length}</span> item(s)</p>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -177,23 +114,23 @@ export default function Shop() {
                         </div>
                     </div>
 
-                    {/* Grid de produits */}
+                    {/* Grille de produits */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {products.map(product => (
+                        {filteredProducts.map(product => (
                             <div key={product.id} className="hover:border border-amber-500 rounded-lg shadow-sm p-4 hover:shadow-lg transition">
                                 <img
-                                    src={product.image}
-                                    alt={product.name}
+                                    src={product.thumbnail}
+                                    alt={product.title}
                                     className="w-full h-64 object-cover rounded mb-4"
                                 />
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-lg font-semibold text-black">{product.name}</h3>
+                                    <h3 className="text-lg font-semibold text-black">{product.title}</h3>
                                     <div className="flex items-center gap-1 text-yellow-500 text-sm">
                                         <FaStar className="text-base" />
-                                        <span className="text-gray-500">(8.6k)</span>
+                                        <span className="text-gray-500">({product.rating})</span>
                                     </div>
                                 </div>
-                                <p className="text-orange-500 font-bold">{product.price}</p>
+                                <p className="text-orange-500 font-bold">${product.price}</p>
                             </div>
                         ))}
                     </div>
