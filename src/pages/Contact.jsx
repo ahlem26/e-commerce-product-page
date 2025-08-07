@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import React from "react";
 import { LuFacebook } from "react-icons/lu";
 import { RiInstagramLine } from "react-icons/ri";
 import { FaXTwitter } from "react-icons/fa6";
@@ -8,21 +7,15 @@ import { FiHome } from "react-icons/fi";
 import { TbPhoneCall } from "react-icons/tb";
 import { HiOutlineMail } from "react-icons/hi";
 import { TbClockHour4 } from "react-icons/tb";
-import Footer from "../components/Footer";
+import { EnTete } from "../components/EnTete";
 
 export default function Contact() {
-    const [cartCount, setCartCount] = useState(0);
 
     return (
-        <div className="max-h-screen">
-            {/* Menu */}
-            <Navbar cartCount={cartCount} />
+        <div>
 
             {/* En-tête */}
-            <div className="text-center py-40 bg-cover bg-center" style={{ backgroundImage: "url('public/images/contact-bg.jpg')" }}>
-                <h1 className="text-5xl font-bold text-white">CONTACT</h1>
-                <p className="text-white mt-6">Home / Contact</p>
-            </div>
+            <EnTete image={'public/images/contact-bg.jpg'} texte1={"CONTACT"} texte2={"Home / Contact"}/>
 
             {/* Section Contact Us */}
             <div className="text-center py-20 px-4 max-w-3xl mx-auto">
@@ -140,9 +133,6 @@ export default function Contact() {
                     ></iframe>
                 </div>
             </div>
-
-            {/* Footer */}
-            <Footer/>
         </div>
     );
 }

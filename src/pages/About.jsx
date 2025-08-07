@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { EnTete } from "../components/EnTete";
 
 // Composant de barre de progression avec étapes, utilisé pour les témoignages
 function StepProgressBar({ steps, currentStep, onBack, onNext }) {
@@ -94,7 +93,6 @@ const testimonials = [
 ];
 
 export default function About() {
-    const [cartCount, setCartCount] = useState(0);
 
 
     const [activeStep, setActiveStep] = useState(1);
@@ -110,15 +108,10 @@ export default function About() {
 
     const current = testimonials[activeStep - 1];
     return (
-        <div className="max-h-screen">
-            {/* Menu */}
-            <Navbar cartCount={cartCount} />
+        <div>
 
             {/* En-tête */}
-            <div className="text-center py-40 bg-cover bg-center" style={{ backgroundImage: "url('public/images/bg-about.jpg')" }}>
-                <h1 className="text-5xl font-bold text-white">ABOUT</h1>
-                <p className="text-white mt-6">Home / Shop</p>
-            </div>
+            <EnTete image={'public/images/bg-about.jpg'} texte1={"ABOUT"} texte2={"Home / Shop"}/>
 
             <div className="mx-auto pt-20">
                 <h1 className="text-3xl font-bold ml-20 mb-12 text-black">Our Story</h1>
@@ -260,9 +253,6 @@ export default function About() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }

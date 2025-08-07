@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import 'react-photo-view/dist/react-photo-view.css';
-import ProductItem from "../components/ProductItem";
-import Navbar from "../components/Navbar";
+import ProductGallery from "../components/products/ProductGallery.jsx";
 
 const images = [
   {
@@ -29,11 +28,9 @@ function ProductPage() {
 
   return (
     <div className="max-h-screen">
-      {/* Menu */}
-      <Navbar cartCount={cartCount} />
 
       {/* Section produit */}
-      <ProductItem mainImage={mainImage} images={images} setQuantity={setQuantity} quantity={quantity} setCartCount={setCartCount} cartCount={cartCount} setMainImage={setMainImage} />
+      <ProductGallery mainImage={mainImage} images={images} setQuantity={setQuantity} quantity={quantity} setCartCount={setCartCount} cartCount={cartCount} setMainImage={setMainImage} />
     </div>
   );
 }

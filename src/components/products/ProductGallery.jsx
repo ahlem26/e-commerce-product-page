@@ -1,7 +1,7 @@
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import RegularButton from '../ui/RegularButton';
+import RegularButton from '../../ui/RegularButton';
 
-export default function ProductItem({ mainImage, images, setQuantity, quantity, setCartCount, cartCount, setMainImage }) {
+export default function ProductGallery({ mainImage, images, setQuantity, quantity, setCartCount, cartCount, setMainImage }) {
     return (
         <section className="flex flex-col md:flex-row items-center justify-center gap-12 p-8 bg-white mt-10">
             {/* Images */}

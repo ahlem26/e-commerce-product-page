@@ -1,100 +1,15 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import React from "react";
 import { AiOutlineMessage } from "react-icons/ai";
+import {blogPosts , recentPosts} from "../data/BlogData.jsx";
+import { EnTete } from "../components/EnTete";
 
 export default function Blog() {
-    const [cartCount, setCartCount] = useState(0);
-
-    const blogPosts = [
-        {
-            image: "public/images/sh-1.jpg",
-            title: "Comfort and Support",
-            content:
-                "Experience superior cushioning and stability with our sneakers, designed for lasting comfort and support throughout your day.",
-            comments: 15,
-            date: "May 10, 2024",
-        },
-        {
-            image: "public/images/sh-2.jpg",
-            title: "Style Meets Function",
-            content:
-                "Our latest sneakers combine bold design with unmatched performance, giving you the best of both worlds.",
-            comments: 8,
-            date: "May 11, 2024",
-        },
-        {
-            image: "public/images/sh-3.jpg",
-            title: "The Future of Sneakers",
-            content:
-                "Discover innovation in every step with cutting-edge technology that keeps you moving forward.",
-            comments: 23,
-            date: "May 12, 2024",
-        },
-        {
-            image: "public/images/sh-4.jpg",
-            title: "Everyday Essential",
-            content:
-                "Simple, clean, and ultra-comfortable — perfect for your daily adventures in style.",
-            comments: 12,
-            date: "May 13, 2024",
-        },
-        {
-            image: "public/images/sh-5.jpg",
-            title: "Everyday Essential",
-            content:
-                "Simple, clean, and ultra-comfortable — perfect for your daily adventures in style.",
-            comments: 12,
-            date: "May 13, 2024",
-        },
-    ];
-
-    const recentPosts = [
-        {
-            image: "public/images/post-1.jpg",
-            title: "Fresh Sneaker Insights",
-            date: "May 10, 2024",
-            comments: 15,
-        },
-        {
-            image: "public/images/post-2.jpg",
-            title: "Style That Speaks",
-            date: "May 11, 2024",
-            comments: 9,
-        },
-        {
-            image: "public/images/post-3.jpg",
-            title: "Tech in Every Step",
-            date: "May 12, 2024",
-            comments: 21,
-        },
-        {
-            image: "public/images/post-4.jpg",
-            title: "Daily Comfort Picks",
-            date: "May 13, 2024",
-            comments: 7,
-        },
-        {
-            image: "public/images/post-5.jpg",
-            title: "Sneaker Fashion Tips",
-            date: "May 14, 2024",
-            comments: 12,
-        },
-    ];
 
     return (
-        <div className="max-h-screen">
-            {/* Menu */}
-            <Navbar cartCount={cartCount} />
+        <div>
 
             {/* En-tête */}
-            <div
-                className="text-center py-40 bg-cover bg-center"
-                style={{ backgroundImage: "url('public/images/bg-about.jpg')" }}
-            >
-                <h1 className="text-5xl font-bold text-white">BLOG</h1>
-                <p className="text-white mt-6">Home / Blog</p>
-            </div>
+            <EnTete image={'public/images/bg-about.jpg'} texte1={"BLOG"} texte2={"Home / Blog"}/>
 
             {/* Contenu principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row gap-10">
@@ -167,9 +82,6 @@ export default function Blog() {
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }
