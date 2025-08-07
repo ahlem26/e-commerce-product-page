@@ -15,7 +15,7 @@ export default function Contact() {
         <div>
 
             {/* En-tête */}
-            <EnTete image={'public/images/contact-bg.jpg'} texte1={"CONTACT"} texte2={"Home / Contact"}/>
+            <EnTete image={'/images/contact-bg.jpg'} texte1={"CONTACT"} texte2={"Home / Contact"}/>
 
             {/* Section Contact Us */}
             <div className="text-center py-20 px-4 max-w-3xl mx-auto">

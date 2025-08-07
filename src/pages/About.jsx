@@ -111,7 +111,7 @@ export default function About() {
         <div>
 
             {/* En-tête */}
-            <EnTete image={'public/images/bg-about.jpg'} texte1={"ABOUT"} texte2={"Home / Shop"}/>
+            <EnTete image={'/images/bg-about.jpg'} texte1={"ABOUT"} texte2={"Home / Shop"}/>
 
             <div className="mx-auto pt-20">
                 <h1 className="text-3xl font-bold ml-20 mb-12 text-black">Our Story</h1>
@@ -121,7 +121,7 @@ export default function About() {
                     <div className="flex flex-col lg:flex-row items-center gap-8 w-full">
                         {/* Image gauche */}
                         <img
-                            src="public/images/nike-1.jpg"
+                            src="/images/nike-1.jpg"
                             alt="Nike"
                             className="w-full lg:w-[300px] rounded-lg shadow-lg object-cover lg:ml-20"
                         />
@@ -142,7 +142,7 @@ export default function About() {
                     </div>
                     {/* Image droite */}
                     <img
-                        src="public/images/shoes-2.jpg"
+                        src="/images/shoes-2.jpg"
                         alt="Shoes"
                         className="w-full lg:w-[700px] lg:h-[500px] object-cover"
                     />
@@ -155,14 +155,14 @@ export default function About() {
                 <div className="relative w-[300px] h-[400px]">
                     {/* Image du dessous */}
                     <img
-                        src="public/images/shoes-3.jpg"
+                        src="/images/shoes-3.jpg"
                         alt=""
                         className="absolute top-0 left-0 w-full h-full object-cover rounded shadow z-0"
                     />
 
                     {/* Image du dessus (à droite en bas) */}
                     <img
-                        src="public/images/nike-4.jpg"
+                        src="/images/nike-4.jpg"
                         alt=""
                         className="absolute bottom-0 right-0 w-full h-full object-cover rounded shadow-lg z-10 translate-x-50 translate-y-30"
                     />

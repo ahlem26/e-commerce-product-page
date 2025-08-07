@@ -9,7 +9,7 @@ export default function Blog() {
         <div>
 
             {/* En-tête */}
-            <EnTete image={'public/images/bg-about.jpg'} texte1={"BLOG"} texte2={"Home / Blog"}/>
+            <EnTete image={'/images/bg-about.jpg'} texte1={"BLOG"} texte2={"Home / Blog"}/>
 
             {/* Contenu principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row gap-10">
