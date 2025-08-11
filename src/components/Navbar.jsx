@@ -1,10 +1,14 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { useCart } from "../context/CartContext";
 
-export default function Navbar({ cartCount }) {
+export default function Navbar() {
+    const { cartCount } = useCart(); // On récupère cartCount depuis le contexte
+
     return (
         <nav className="bg-white">
             <div className="max-w-6xl mx-auto px-4 pb-5 pt-3 border-b border-gray-200">
                 <div className="flex justify-between items-center h-16">
+                    {/* Logo + Menu */}
                     <div className="flex space-x-12">
                         <div className="text-2xl font-bold">
                             <img src="/images/logo.svg" alt="logo" />
@@ -17,7 +21,10 @@ export default function Navbar({ cartCount }) {
                             <a href="/contact" className="text-gray-500 hover:text-black">Contact</a>
                         </div>
                     </div>
+
+                    {/* Panier + Auth */}
                     <div className="flex items-center space-x-8">
+                        {/* Panier */}
                         <div className="relative">
                             <img
                                 src="/images/icon-cart.svg"
@@ -31,6 +38,7 @@ export default function Navbar({ cartCount }) {
                             )}
                         </div>
 
+                        {/* Authentification Clerk */}
                         <div>
                             <SignedOut>
                                 <SignInButton />
@@ -45,4 +53,3 @@ export default function Navbar({ cartCount }) {
         </nav>
     );
 }
-

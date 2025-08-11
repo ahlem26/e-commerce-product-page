@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 export function useProducts() {
-    const [products, setProducts] = useState([]);
+   const [allProducts, setAllProducts] = useState([]);
     useEffect(() => {
             // Charger uniquement les catégories mens-shoes et womens-shoes
             const fetchProducts = async () => {
@@ -12,7 +12,7 @@ export function useProducts() {
                     ]);
     
                     const combined = [...mensRes.data.products, ...womensRes.data.products];
-                    setProducts(combined);
+                    setAllProducts(combined); // on garde une copie complète
                 } catch (err) {
                     console.error("Erreur lors de la récupération des produits :", err);
                 }
@@ -20,5 +20,5 @@ export function useProducts() {
     
             fetchProducts();
         }, []);
-        return {products, setProducts};
+        return { allProducts};
 }

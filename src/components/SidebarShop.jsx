@@ -1,37 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
 
-export function SidebarShop({products, setProducts}) {
-    const [category, setCategory] = useState("all");
-        const [selectedBrands, setSelectedBrands] = useState([]);
+export function SidebarShop({ handleCategoryFilter, handleBrandChange, category, selectedBrands }) {
 
-    const handleCategoryFilter = (cat) => {
-        setCategory(cat);
-        applyFilters(cat, selectedBrands);
-    };
-
-    const handleBrandChange = (brand) => {
-        const updatedBrands = selectedBrands.includes(brand)
-            ? selectedBrands.filter(b => b !== brand)
-            : [...selectedBrands, brand];
-        setSelectedBrands(updatedBrands);
-        applyFilters(category, updatedBrands);
-    };
-    const applyFilters = (cat, brands) => {
-        let filtered = products;
-
-        if (cat !== "all") {
-            filtered = filtered.filter(p => p.category === cat);
-        }
-
-        if (brands.length > 0) {
-            filtered = filtered.filter(product =>
-                brands.some(brand => product.title.toLowerCase().includes(brand.toLowerCase()))
-            );
-        }
-        setProducts(filtered);
-       
-    };
     return (
         <aside className="w-full lg:w-1/4 space-y-8">
             <div>
@@ -69,5 +40,5 @@ export function SidebarShop({products, setProducts}) {
                 </ul>
             </div>
         </aside>
-    )
+    );
 }

@@ -1,38 +1,41 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useProductDetails from "../hook/useProductDetails";
+import ProductGallery from "../components/products/ProductGallery";
 import 'react-photo-view/dist/react-photo-view.css';
-import ProductGallery from "../components/products/ProductGallery.jsx";
 
-const images = [
-  {
-    image_min: "/images/image-product-1-thumbnail.jpg",
-    image_big: "/images/image-product-1.jpg"
-  },
-  {
-    image_min: "/images/image-product-2-thumbnail.jpg",
-    image_big: "/images/image-product-2.jpg"
-  },
-  {
-    image_min: "/images/image-product-3-thumbnail.jpg",
-    image_big: "/images/image-product-3.jpg"
-  },
-  {
-    image_min: "/images/image-product-4-thumbnail.jpg",
-    image_big: "/images/image-product-4.jpg"
-  }
-];
+export default function ProductPage() {
+  const { id } = useParams();
+  const { product, loading, error } = useProductDetails(id);
 
-function ProductPage() {
-  const [quantity, setQuantity] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
-  const [mainImage, setMainImage] = useState(images[0].image_big);
+  const [quantity, setQuantity] = useState(1);
+  const [mainImage, setMainImage] = useState("");
+
+  useEffect(() => {
+    if (product?.images?.length > 0) {
+      setMainImage(product.images[0]);
+    }
+  }, [product]);
+
+  if (loading) return <p className="text-center py-10">Chargement...</p>;
+  if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
+  if (!product) return <p className="text-center py-10">Produit introuvable</p>;
+
+  const images = product.images.map(img => ({
+    image_min: img,
+    image_big: img
+  }));
 
   return (
-    <div className="max-h-screen">
-
-      {/* Section produit */}
-      <ProductGallery mainImage={mainImage} images={images} setQuantity={setQuantity} quantity={quantity} setCartCount={setCartCount} cartCount={cartCount} setMainImage={setMainImage} />
+    <div className="max-w-7xl mx-auto py-12 px-4">
+      <ProductGallery
+        product={product}
+        mainImage={mainImage}
+        images={images}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        setMainImage={setMainImage}
+      />
     </div>
   );
 }
-
-export default ProductPage;
