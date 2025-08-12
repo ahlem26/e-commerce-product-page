@@ -1,14 +1,14 @@
 import { useCart } from "../context/CartContext";
 
-export default function RegularButton({ quantity, setQuantity }) {
-  const { cartCount, setCartCount } = useCart();
+export default function RegularButton({ quantity, setQuantity, product }) {
+  const { addToCart } = useCart();
 
   return (
     <button
       onClick={() => {
         if (quantity > 0) {
-          setCartCount(cartCount + quantity);
-          setQuantity(0); // remet à 0 la quantité après ajout
+          addToCart(product, quantity); // On ajoute au panier avec la quantité
+          setQuantity(1); // remet à 1 après ajout
         }
       }}
       className="flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-md w-full sm:w-64 transition"
