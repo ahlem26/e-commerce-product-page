@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useProducts } from "../hook/useProducts";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+    const { allProducts } = useProducts();
+    const scrollRef = useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const scrollAmount = 300; // px à scroller
+            scrollRef.current.scrollBy({
+                left: direction === "left" ? -scrollAmount : scrollAmount,
+                behavior: "smooth",
+            });
+        }
+    };
+
     return (
         <div className="space-y-16">
             {/* Hero */}
@@ -30,27 +46,48 @@ export default function Home() {
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold">Trending Products</h2>
                     <div className="flex gap-2">
-                        <FaArrowLeft className="cursor-pointer hover:text-gray-500" />
-                        <FaArrowRight className="cursor-pointer hover:text-gray-500" />
+                        <button
+                            onClick={() => scroll("left")}
+                            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+                        >
+                            <FaChevronLeft />
+                        </button>
+                        <button
+                            onClick={() => scroll("right")}
+                            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+                        >
+                            <FaChevronRight />
+                        </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition">
+
+                {/* Conteneur scrollable */}
+                <div
+                    ref={scrollRef}
+                    className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 no-scrollbar"
+                >
+                    {allProducts.map((product) => (
+                        <Link // <-- Ajout du lien
+                            to={`/product/${product.id}`} // redirige vers la page produit
+                            key={product.id}
+                            className="min-w-[200px] bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
+                        >
                             <img
-                                src="images/istockphoto-1688015056-1024x1024.jpg"
-                                alt="Product"
+                                src={product.thumbnail}
+                                alt={product.title}
                                 className="w-full h-40 object-cover"
                             />
                             <div className="p-4 flex justify-between items-center">
                                 <div>
-                                    <p className="text-sm text-gray-500">(11.6k Reviews)</p>
-                                    <h3 className="font-semibold">Nike Running Shoe</h3>
-                                    <p className="text-sm text-gray-600">$349 Sold Out 85%</p>
+                                    <p className="text-sm text-gray-500">
+                                        ({product.rating} Reviews)
+                                    </p>
+                                    <h3 className="font-semibold">{product.title}</h3>
+                                    <p className="text-sm text-gray-600">${product.price}</p>
                                 </div>
                                 <MdOutlineShoppingCart className="text-xl cursor-pointer hover:text-gray-600" />
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </section>

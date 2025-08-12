@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { LuFacebook } from "react-icons/lu";
 import { RiInstagramLine } from "react-icons/ri";
 import { FaXTwitter } from "react-icons/fa6";
@@ -8,8 +8,31 @@ import { TbPhoneCall } from "react-icons/tb";
 import { HiOutlineMail } from "react-icons/hi";
 import { TbClockHour4 } from "react-icons/tb";
 import { EnTete } from "../components/EnTete";
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
+    const formRef = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs.sendForm(
+            "service_08aarkq",      // <-- Remplace par ton Service ID
+            "template_jdjcxke",     // <-- Remplace par ton Template ID
+            formRef.current,
+            "cDiVI15RmrDYrrQv2"       // <-- Remplace par ta Public Key
+        ).then(
+            (result) => {
+                console.log(result.text);
+                alert("Message envoyé avec succès !");
+                formRef.current.reset();
+            },
+            (error) => {
+                console.log(error.text);
+                alert("Erreur lors de l'envoi. Réessayez.");
+            }
+        );
+    };
 
     return (
         <div>
@@ -102,12 +125,12 @@ export default function Contact() {
                 {/* Formulaire de contact */}
                 <div className="bg-gray-50 shadow-md rounded-lg p-6">
                     <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">Send a Message</h2>
-                    <form className="space-y-4">
-                        <input type="text" placeholder="Name" className="w-full p-3 border border-gray-300 rounded bg-white" />
-                        <input type="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded bg-white" />
-                        <input type="text" placeholder="Phone Number" className="w-full p-3 border border-gray-300 rounded bg-white" />
-                        <input type="text" placeholder="Address" className="w-full p-3 border border-gray-300 rounded bg-white" />
-                        <textarea placeholder="Your message..." className="w-full p-3 border border-gray-300 rounded h-24 resize-none bg-white"></textarea>
+                    <form ref={formRef} onSubmit={sendEmail} className="space-y-4">
+                        <input name="name" type="text" placeholder="Name" className="w-full p-3 border border-gray-300 rounded bg-white" required />
+                        <input name="email" type="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded bg-white" required />
+                        <input name="phone" type="text" placeholder="Phone Number" className="w-full p-3 border border-gray-300 rounded bg-white" />
+                        <input name="address" type="text" placeholder="Address" className="w-full p-3 border border-gray-300 rounded bg-white" />
+                        <textarea name="message" placeholder="Your message..." className="w-full p-3 border border-gray-300 rounded h-24 resize-none bg-white" required></textarea>
                         <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded transition">
                             SEND
                         </button>

@@ -1,7 +1,8 @@
 import React from "react";
 import { AiOutlineMessage } from "react-icons/ai";
-import {blogPosts , recentPosts} from "../data/BlogData.jsx";
+import { blogPosts, recentPosts } from "../data/BlogData.jsx";
 import { EnTete } from "../components/EnTete";
+import { Link } from "react-router-dom";
 
 export default function Blog() {
 
@@ -9,16 +10,17 @@ export default function Blog() {
         <div>
 
             {/* En-tête */}
-            <EnTete image={'/images/bg-about.jpg'} texte1={"BLOG"} texte2={"Home / Blog"}/>
+            <EnTete image={'/images/bg-about.jpg'} texte1={"BLOG"} texte2={"Home / Blog"} />
 
             {/* Contenu principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row gap-10">
                 {/* Blog posts */}
                 <div className="flex flex-col divide-y divide-gray-200">
                     {blogPosts.map((post, index) => (
-                        <div
+                        <Link
                             key={index}
-                            className="flex flex-col md:flex-row gap-6 py-6 bg-white"
+                            to={`/blog/${index}`}
+                            className="flex flex-col md:flex-row gap-6 py-6 bg-white hover:shadow-lg transition"
                         >
                             <img
                                 src={post.image}
@@ -40,7 +42,7 @@ export default function Blog() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 

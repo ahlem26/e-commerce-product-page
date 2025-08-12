@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
@@ -25,7 +26,7 @@ export default function Navbar() {
                     {/* Panier + Auth */}
                     <div className="flex items-center space-x-8">
                         {/* Panier */}
-                        <div className="relative">
+                        <Link to="/cart" className="relative">
                             <img
                                 src="/images/icon-cart.svg"
                                 alt="Panier"
@@ -36,7 +37,7 @@ export default function Navbar() {
                                     {cartCount}
                                 </span>
                             )}
-                        </div>
+                        </Link>
 
                         {/* Authentification Clerk */}
                         <div>
