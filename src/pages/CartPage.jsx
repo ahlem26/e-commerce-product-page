@@ -63,10 +63,10 @@ export default function CartPage() {
                         className="flex items-center justify-between border-b pb-4"
                     >
                         <div className="flex items-center gap-4">
-                            <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
+                            <img src={item.thumbnail} alt={item.title} className="w-20 h-20 object-cover rounded" />
                             <div>
-                                <h2 className="text-lg font-semibold">{item.name}</h2>
-                                <p className="text-gray-500">{item.price} €</p>
+                                <h2 className="text-lg font-semibold">{item.title}</h2>
+                                <p className="text-gray-500">Prix : {item.price} €</p>
                                 <p>Quantité : {item.quantity}</p>
                             </div>
                         </div>
